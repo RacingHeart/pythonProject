@@ -7,7 +7,7 @@ def test_mask_account_card():
     assert mask_account_card("Счет 11223344556677889900") == 'Счет **9900'
     assert mask_account_card('Mir Pay 1234567891234567') == 'Mir Pay  1234 56** **** 4567'
     with pytest.raises(TypeError):
-        mask_account_card( 123456)
+        mask_account_card(' 123456')
 
 @pytest.mark.parametrize('number_card, result', [
     ('Счет 112233445566778899', 'Счет **8899'),
