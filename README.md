@@ -26,3 +26,6 @@ executed_transactions = filter_by_state(transactions)
 # Пример использования sort_by_date
 sorted_transactions = sort_by_date(transactions)
 ```
+## Тесты:
+1. Все функции протестированы и собраны в отдельную папку
+2. Если хотите увидеть результаты тестирования, в репозитории выберите папку 'htmlcov' и запустите интересующий вас файл с тестом.
