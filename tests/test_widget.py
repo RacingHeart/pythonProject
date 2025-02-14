@@ -9,11 +9,13 @@ def test_mask_account_card():
     with pytest.raises(TypeError):
         mask_account_card(' 123456')
 
+
 @pytest.mark.parametrize('number_card, result', [
     ('Счет 112233445566778899', 'Счет **8899'),
     ('Visa Gold 1234567891234567', 'Visa Gold  1234 56** **** 4567'),])
 def test_mask_account_card(number_card, result):
     assert mask_account_card(number_card) == result
+
 
 def test_get_date():
     assert get_date('2024-02-11T04:35:54.671407') == '11.02.2024'

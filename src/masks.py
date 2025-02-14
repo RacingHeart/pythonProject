@@ -10,4 +10,4 @@ def get_mask_account(mask_account: int) -> str:
     if len(str(mask_account)) < 4:
         raise ValueError('Отсутствует номер карты')
     else:
-         return f"**{str_mask_account[-4:]}"
+        return f"**{str_mask_account[-4:]}"
