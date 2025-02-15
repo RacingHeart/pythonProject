@@ -15,7 +15,7 @@ def mask_account_card(number_card: str) -> str:
                 name_card+=i + " "
             elif i.isdigit():
                 numbers_card = i
-        return f"{"".join(name_card)} {numbers_card[0:4]} {numbers_card[4:6]}** **** {numbers_card[-4:]}"
+        return f'{"".join(name_card)} {numbers_card[0:4]} {numbers_card[4:6]}** **** {numbers_card[-4:]}'
 
 
 if __name__ == "__main__":
