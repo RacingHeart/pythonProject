@@ -7,4 +7,7 @@ def get_mask_card_number(card_number: int) -> str:
 def get_mask_account(mask_account: int) -> str:
     """Пишем функцию, которая скрывает номер счёта"""
     str_mask_account = str(mask_account)
-    return f"**{str_mask_account[-4:]}"
+    if len(str(mask_account)) < 4:
+        raise ValueError('Отсутствует номер карты')
+    else:
+        return f"**{str_mask_account[-4:]}"
