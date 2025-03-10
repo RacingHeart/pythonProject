@@ -20,4 +20,4 @@ def get_convert_currency(amount: float, currency: str) -> Any:
 
     print(response.json())
 
-    return response.json()["result"]
+    return float(response.json()["result"])
