@@ -1,0 +1,16 @@
+###
+get_mask_card_number ошибка AttributeError аргументы (1234567891234567,) {}
+###
+get_mask_card_number ошибка AttributeError аргументы (1234567891234567,) {}
+###
+работа функции get_mask_card_number >>> 7000 79** **** 6361
+###
+работа функции get_mask_card_number >>> 1234 56** **** 3456
+###
+get_mask_card_number ошибка ValueError аргументы ('',) {}
+###
+get_mask_card_number ошибка ValueError аргументы ('   ',) {}
+###
+get_mask_card_number ошибка ValueError аргументы ('700079228960636132',) {}
+###
+get_mask_card_number ошибка ValueError аргументы ('1234-5678-9012-3456',) {}
