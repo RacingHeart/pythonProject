@@ -1,32 +1,67 @@
 from datetime import datetime
 
+from src.decorators import log
+from src.masks import get_mask_account, get_mask_card_number
 
-def mask_account_card(number_card: str) -> str:
-    """Функция, возвращающая замаскированный номер карты или счёта"""
 
-    bill = "Счет"
-    if bill in number_card:
-        return f"Счет **{number_card[-4:]}"
+@log(filename=None)
+def mask_account_card(account: str) -> str:
+    """
+    Маскирует номер кредитной карты/счета, отображая его в формате:
+        Для карт: [Название карты] XXXX XX** **** XXXX, где X — это цифра номера
+        Для счетов: Счет **XXXX, где X — это цифра номера.
+
+    Параметры:
+        account (str): Номер карты/счета в строковом формате.
+
+    Возвращает:
+        str: Замаскированный номер карты/счета.
+    """
+
+    if not account or account.strip() == "":
+        raise ValueError("Не введен номер карты/счета")
+
+    if account.isdigit():
+        raise ValueError("Данные введены некорректно")
+
+    account_split = [item.strip() for item in account.split()]
+    account_name_list = [item for item in account_split if item.isalpha()]
+    account_name = " ".join(account_name_list)
+    account_number = " ".join([item for item in account_split if item not in account_name_list]) or ""
+
+    if account_name == "Счет":
+        masked_account = get_mask_account(account_number)
     else:
-        list_name_card = number_card.split()
-        name_card = []
-        for i in list_name_card:
-            if i.isalpha():
-                name_card+=i + " "
-            elif i.isdigit():
-                numbers_card = i
-        return f'{"".join(name_card)} {numbers_card[0:4]} {numbers_card[4:6]}** **** {numbers_card[-4:]}'
+        masked_account = get_mask_card_number(account_number)
+
+    full_masked_account = " ".join([account_name, masked_account])
+    return full_masked_account
 
 
-if __name__ == "__main__":
-    print(mask_account_card(str("Visa Platinum 2202345612340099")))
-    print(mask_account_card(str("Счет 11223344556677889900")))
+@log(filename="log_widget.txt")
+def get_date(date: str) -> str:
+    """
+    Преобразует дату из формата ISO 8601 ("YYYY-MM-DDTHH:MM:SS.ssssss") в формат "DD.MM.YYYY".
 
+    Параметры:
+        date (str): Дата в формате "YYYY-MM-DDTHH:MM:SS.ssssss".
 
-def get_date(my_date: str) -> str:
-    """Функция, принимающая на вход строку и отдает корректный результат"""
-    date_obj = datetime.strptime(my_date, "%Y-%m-%dT%H:%M:%S.%f")
-    return date_obj.strftime("%d.%m.%Y")
+    Возвращает:
+        str: Дата в формате "DD.MM.YYYY".
 
+    Raises:
+        ValueError: Если передано не строковое значение.
+        ValueError: Если строка пустая или содержит только пробелы.
+        ValueError: Если дата не соответствует формату "YYYY-MM-DDTHH:MM:SS.ssssss".
+    """
+    if not isinstance(date, str):
+        raise ValueError("Дата должна быть строкой")
 
-print(get_date("2024-03-11T02:26:18.671407"))
+    if not date.strip():
+        raise ValueError("Дата не может быть пустой")
+
+    try:
+        date_object = datetime.strptime(date.replace("Z", ".000000"), "%Y-%m-%dT%H:%M:%S.%f")
+        return date_object.strftime("%d.%m.%Y")
+    except ValueError:
+        raise ValueError("Некорректный формат даты")
